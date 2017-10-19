@@ -12,6 +12,9 @@ import VO.Tabla;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.Index;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,21 +31,27 @@ public class InserTabla extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-  
+
             RequestDispatcher rq = request.getRequestDispatcher("inserTabla.jsp");
 
-            ServiciosEsquema ser = new ServiciosEsquema();
-
-            ArrayList<Esquema> lis = null;
-            lis = (ArrayList<Esquema>) ser.listarEs();
-            if (lis.size() > 0) {
-
-                request.setAttribute("lis", lis);
-            } else {
-                request.setAttribute("lis", null);
-            }
-            rq.forward(request, response);
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+        RequestDispatcher rq = request.getRequestDispatcher("inserTabla.jsp");
+        ServiciosEsquema ser = new ServiciosEsquema();
+        ArrayList<Esquema> lis = null;
+        lis = (ArrayList<Esquema>) ser.listarEs();
+        if (lis.size() > 0) {
+
+            request.setAttribute("lis", lis);
+        } else {
+            request.setAttribute("lis", null);
+        }
+        rq.forward(request, response);
     }
 
     @Override
@@ -51,9 +60,11 @@ public class InserTabla extends HttpServlet {
         processRequest(request, response);
         boolean resultado = false;
 
+        ServiciosEsquema ser = new ServiciosEsquema();
+
+        String nombre = request.getParameter("name");
         String id = request.getParameter("idTabla");
         String nombreES = request.getParameter("nombreEsquema");
-        String nombre = request.getParameter("name");
 
         int id_tabla = Integer.parseInt(id);
 
@@ -61,15 +72,13 @@ public class InserTabla extends HttpServlet {
 
             resultado = true;
 
-            Esquema es = new Esquema(id_tabla, nombre);
-           
-            ServiciosEsquema ser = new ServiciosEsquema();
-            ServiciosTabla st=new  ServiciosTabla();
+            Esquema es = new Esquema();
+
+            ServiciosTabla st = new ServiciosTabla();
 
             es = ser.extraerEsquema(nombreES);
-             Tabla t=new Tabla(id_tabla, es.getId_esquema(), nombre);
+            Tabla t = new Tabla(id_tabla, es.getId_esquema(), nombre);
             st.agragarTabla(t);
-            
 
             RequestDispatcher rq = request.getRequestDispatcher("InserTabla.jsp");
 

@@ -34,7 +34,7 @@ public class ServiciosTabla {
             // Parameters start with 1
             preparedStatement.setInt(1, t.getId_tabla());
             preparedStatement.setString(2, t.getNombre_Tabla());
-            preparedStatement.setInt(23, t.getId_esquema());
+            preparedStatement.setInt(3, t.getId_esquema());
 
             preparedStatement.executeUpdate();
 

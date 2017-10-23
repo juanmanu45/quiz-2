@@ -7,14 +7,13 @@ package Controladores;
 
 import DAO.ServiciosEsquema;
 import DAO.ServiciosTabla;
+import DAO.ServiciosUnidad;
 import VO.Esquema;
 import VO.Tabla;
+import VO.Unidad;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.Index;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,16 +24,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Juan Manuel
  */
-public class InserTabla extends HttpServlet {
+public class InsertarUnidad extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {
-            RequestDispatcher rq = request.getRequestDispatcher("inserTabla.jsp");
-            ServiciosEsquema ser = new ServiciosEsquema();
-            ArrayList<Esquema> lis = null;
-            lis = (ArrayList<Esquema>) ser.listarEs();
+            RequestDispatcher rq = request.getRequestDispatcher("inserUnidad.jsp");
+            ServiciosTabla ser = new ServiciosTabla();
+            ArrayList<Tabla> lis = null;
+            lis = (ArrayList<Tabla>) ser.listarTablas();
             if (lis.size() > 0) {
 
                 request.setAttribute("lis", lis);
@@ -44,37 +43,47 @@ public class InserTabla extends HttpServlet {
             rq.forward(request, response);
 
         }
-
+  
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         boolean resultado = false;
 
-        ServiciosEsquema ser = new ServiciosEsquema();
+        ServiciosTabla ser = new ServiciosTabla();
 
-        String nombre = request.getParameter("name");
-        String id = request.getParameter("idTabla");
-        String nombreES = request.getParameter("nombreEsquema");
+        String nombre = request.getParameter("nombreTabla");
+        String id = request.getParameter("id_contexto");
+        String idu = request.getParameter("id_u");
 
-        int id_tabla = Integer.parseInt(id);
+        int id_con = Integer.parseInt(id);
+        int id_u=Integer.parseInt(idu);
 
-        if (id.trim().length() > 0 && nombre.trim().length() > 0 && nombreES.trim().length() > 0) {
+        if (id.trim().length() > 0 && nombre.trim().length() > 0 && nombre.trim().length() > 0) {
 
             resultado = true;
 
-            Esquema es = new Esquema();
+            Tabla es=new Tabla();
             
 
-            ServiciosTabla st = new ServiciosTabla();
+            ServiciosUnidad st = new ServiciosUnidad();
 
-            es = ser.extraerEsquema(nombreES);
-            Tabla t = new Tabla(id_tabla, es.getId_esquema(), nombre);
-            st.agragarTabla(t);
+            es = ser.extraerTabla(nombre);
 
-            RequestDispatcher rq = request.getRequestDispatcher("inserTabla.jsp");
+            Unidad u= new Unidad(id_u, id_con, es.getId_tabla());
+            st.agragarUnidad(u);
+
+            RequestDispatcher rq = request.getRequestDispatcher("inUnidad.jsp");
 
             if (resultado == true) {
                 request.setAttribute("resultado", true);
@@ -86,7 +95,7 @@ public class InserTabla extends HttpServlet {
         } else {
             request.setAttribute("resultado", false);
         }
-
+        
     }
 
     /**

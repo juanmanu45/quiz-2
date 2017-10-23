@@ -30,7 +30,7 @@ public class ServiciosTabla {
     public void agragarTabla(Tabla t) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into Tabla(id_Tabla,Nombre_tabla,id_esquema,) values (?, ?, ?)");
+                    .prepareStatement("insert into Tabla(id_Tabla,Nombre_tabla,id_esquema) values (?, ?, ?)");
             // Parameters start with 1
             preparedStatement.setInt(1, t.getId_tabla());
             preparedStatement.setString(2, t.getNombre_Tabla());
@@ -43,7 +43,7 @@ public class ServiciosTabla {
         }
     }
 
-    public ArrayList<Tabla> listarEs() {
+    public ArrayList<Tabla> listarTablas() {
         ArrayList<Tabla> tablas = new ArrayList<Tabla>();
         try {
             System.out.println("LLegue hasta aca");
@@ -75,7 +75,7 @@ public class ServiciosTabla {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                t.setId_esquema(rs.getInt("id_Esquema"));
+                t.setId_esquema(rs.getInt("id_Tabla"));
 
             }
         } catch (SQLException e) {

@@ -101,7 +101,7 @@ public class ServiciosEsquema {
 		Esquema es=new Esquema();
 		try {
 			PreparedStatement preparedStatement = connection.
-					prepareStatement("'select id_Esquema from Esquemas where nombre=?");
+					prepareStatement("select id_Esquema from Esquemas where nombre = ? ");
 			preparedStatement.setString(1, nombre);
 			ResultSet rs = preparedStatement.executeQuery();
 			

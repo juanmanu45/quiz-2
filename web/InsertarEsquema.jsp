@@ -32,7 +32,7 @@
                         <input class="contact" type="text" name="nombre" value="" /></p>
                     <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="submit" /></p>
                 </div>
-                <h2><a href="InsertarEsquema.jsp"> Ver los guardados</a></h2>
+                <h2><a href="ListarEsquemas"> Ver los guardados</a></h2>
                 <h2><a href="InserTabla"> insertar tabla en esquema</a></h2>
                 
                 

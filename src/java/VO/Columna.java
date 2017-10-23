@@ -15,12 +15,26 @@ public class Columna {
     private int id_columna;
     private String nombre_col;
     private String tipo;
+    private boolean foranea;
 
-    public Columna(int id_tabla, int id_columna, String nombre_col, String tipo) {
+    public Columna(int id_tabla, int id_columna, String nombre_col, String tipo,boolean foranea) {
         this.id_tabla = id_tabla;
         this.id_columna = id_columna;
         this.nombre_col = nombre_col;
         this.tipo = tipo;
+        this.foranea=foranea;
+    }
+
+    public Columna() {
+       
+    }
+
+    public boolean isForanea() {
+        return foranea;
+    }
+
+    public void setForanea(boolean foranea) {
+        this.foranea = foranea;
     }
 
     public int getId_tabla() {

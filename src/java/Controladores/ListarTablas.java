@@ -5,14 +5,11 @@
  */
 package Controladores;
 
-import DAO.ServiciosEsquema;
-import VO.Esquema;
+import DAO.ServiciosTabla;
+import VO.Tabla;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.Index;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Juan Manuel
  */
-public class ListarEsquemas extends HttpServlet {
+public class ListarTablas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,12 +35,12 @@ public class ListarEsquemas extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            RequestDispatcher rq = request.getRequestDispatcher("ListarEsquemas.jsp");
+            RequestDispatcher rq = request.getRequestDispatcher("LstarTablas.jsp");
 
-            ServiciosEsquema ser = new ServiciosEsquema();
+            ServiciosTabla st = new ServiciosTabla();
 
-            ArrayList<Esquema> lis = null;
-            lis = (ArrayList<Esquema>) ser.listarEs();
+            ArrayList<Tabla> lis = null;
+            lis = (ArrayList<Tabla>) st.listarTablas();
             if (lis.size() > 0) {
 
                 request.setAttribute("lis", lis);
@@ -52,15 +49,22 @@ public class ListarEsquemas extends HttpServlet {
             }
             rq.forward(request, response);
         }
-   }
 
+    }
 
-
-
-@Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
@@ -72,7 +76,7 @@ public class ListarEsquemas extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -83,7 +87,7 @@ public class ListarEsquemas extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-        public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

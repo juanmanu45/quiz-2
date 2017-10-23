@@ -1,41 +1,43 @@
 <%-- 
-    Document   : ListarEsquemas
-    Created on : 18/10/2017, 01:52:21 AM
+    Document   : LstarTablas
+    Created on : 22/10/2017, 07:10:39 PM
     Author     : Juan Manuel
 --%>
 
-<%@page import="VO.Esquema"%>
+<%@page import="VO.Tabla"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="VO.Esquema"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Listar Esquemas</title>
+        <title>JSP Page</title>
     </head>
     <body>
-     
+        
         
                <h1>Registro de Esquemas</h1>
                     <table>
                         <tr>
-                            <td>ID</td>
-                            <td>NOMBRE</td>
+                            <td>ID TABLA</td>
+                            <td>NOMBRE TABLA</td>
+                            <td>ESQUEMA AL QUE PERTENECE </td>
                             
                         </tr>
                         <%
                             if (request.getAttribute("lis") != null) {
-                                ArrayList<Esquema> esquemas = (ArrayList<Esquema>) request.getAttribute("lis");
+                                ArrayList<Tabla> Tablas = (ArrayList<Tabla>) request.getAttribute("lis");
 
-                                if (esquemas != null) {
-                                    for (Esquema es: esquemas) {
+                                if (Tablas != null) {
+                                    for (Tabla t: Tablas) {
 
                         %>
                         <h1></h1>
                         <tr>  
-                            <td><%=es.getId_esquema()%></td>
-                            <td><%=es.getVarchar()%></td>
-                           
+                            <td><%=t.getId_tabla()%></td>
+                            <td><%=t.getNombre_Tabla()%></td>
+                             <td><%=t.getId_esquema()%></td>
                         </tr>
 
                         <%
